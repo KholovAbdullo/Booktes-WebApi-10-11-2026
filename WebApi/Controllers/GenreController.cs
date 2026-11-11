@@ -1,3 +1,4 @@
+using Application.DTOs;
 using Application.Interfaces;
 using Application.Responses;
 using Domain.Models;
@@ -12,15 +13,15 @@ public class GenreController(IGenreService genreService) : ControllerBase
     private IGenreService service = genreService;
 
     [HttpPost]
-    public async Task<ApiResponse<bool>> AddGenre(Genres genre)
+    public async Task<ApiResponse<bool>> AddGenre(CreateGenreDto genreDto)
     {
-        return await service.AddGenre(genre);
+        return await service.AddGenre(genreDto);
     }
 
     [HttpPut]
-    public async Task<ApiResponse<bool>> UpdateGenre(Genres genre)
+    public async Task<ApiResponse<bool>> UpdateGenre(UpdateGenreDto genreDto)
     {
-        return await service.UpdateGenre(genre);
+        return await service.UpdateGenre(genreDto);
     }
 
     [HttpDelete]
@@ -30,21 +31,20 @@ public class GenreController(IGenreService genreService) : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ApiResponse<Genres>> GetGenre(int id)
+    public async Task<ApiResponse<GenreDto>> GetGenre(int id)
     {
-        var res = await service.GetGenre(id);
-
-        if (res == null)
-        {
-            return null!;
-        }
-
-        return res;
+        return await service.GetGenre(id);
     }
 
     [HttpGet]
-    public async Task<ApiResponse<List<Genres>>> GetGenres()
+    public async Task<ApiResponse<List<GenreDto>>> GetGenres()
     {
         return await service.GetGenres();
+    }
+
+    [HttpGet("statistic/{genreId}")]
+    public async Task<ApiResponse<GenreStatisticDto>> GetGenreStatistic(int genreId)
+    {
+        return await service.GetGenreStatistic(genreId);
     }
 }

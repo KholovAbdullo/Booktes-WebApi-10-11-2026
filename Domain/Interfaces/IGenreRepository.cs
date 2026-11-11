@@ -9,4 +9,10 @@ public interface IGenreRepository
     Task<bool> DeleteGenre(int id);
     Task<Genres> GetGenre(int id);
     Task<List<Genres>> GetGenres();
+
+    Task<int> GetGenresAmount();
+    Task<int> GetMinPublishedYearByGenre(int genreId);
+    Task<int> GetMaxPublishedYearByGenre(int genreId);
+    Task<int> GetAmountByGenre(int genreId);
+
 }

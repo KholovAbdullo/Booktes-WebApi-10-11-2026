@@ -27,6 +27,16 @@ public class GenreRepository(Database database):IGenreRepository
         return res > 0;
     }
 
+    public async Task<int> GetAmountByGenre(int genreId)
+    {
+        using var conn = data.Connection();
+        conn.Open();
+        var query="select count(*) from Books where id=@genreId";
+        var res = await conn.ExecuteScalarAsync<int>(query,new{genreId});
+        return res;
+    }
+
+
     public async Task<Genres> GetGenre(int id)
     {
         using var conn=data.Connection();
@@ -43,6 +53,34 @@ public class GenreRepository(Database database):IGenreRepository
         var query = await conn.QueryAsync<Genres>("select * from Genres");
         return query.ToList();
     }
+
+    public async Task<int> GetGenresAmount()
+    {
+        using var conn=data.Connection();
+        conn.Open();
+        var query="select count(*) from Genres";
+        var res = await conn.ExecuteScalarAsync<int>(query);
+        return res;
+    }
+
+    public async Task<int> GetMaxPublishedYearByGenre(int genreId)
+    {
+        using var conn=data.Connection();
+        conn.Open();
+        var query = "select max(publishedyear) from Books where id=@genreId";
+        var res = await conn.ExecuteScalarAsync<int>(query,new {genreId});
+        return res;
+    }
+
+    public async Task<int> GetMinPublishedYearByGenre(int genreId)
+    {
+        using var conn=data.Connection();
+        conn.Open();
+        var query = "select min(publishedyear) from Books where id=@genreId";
+        var res = await conn.ExecuteScalarAsync<int>(query,new {genreId});
+        return res;
+    }
+
 
     public async Task<bool> UpdateGenre(Genres genre)
     {

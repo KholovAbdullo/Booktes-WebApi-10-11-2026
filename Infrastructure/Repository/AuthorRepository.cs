@@ -44,6 +44,34 @@ public class AuthorRepository(Database database):IAuthorRepository
         return query.ToList();
     }
 
+    public async Task<int> GetAuthorsAmount()
+    {
+        using var conn=data.Connection();
+        conn.Open();
+        var query="select count(*) from Author";
+        var res = await conn.ExecuteScalarAsync<int>(query);
+        return res;
+    }
+
+    public async Task<int> GetMaxPublishedYearByAuthor(int authorId)
+    {
+        using var conn=data.Connection();
+        conn.Open();
+        var query = "select max(publishedyear) from Books where id=@authorId";
+        var res = await conn.ExecuteScalarAsync<int>(query,new {authorId});
+        return res;
+    }
+
+    public async Task<int> GetMinPublishedYearByAuthor(int authorId)
+    {
+        using var conn=data.Connection();
+        conn.Open();
+        var query = "select min(publishedyear) from Books where id=@authorId";
+        var res = await conn.ExecuteScalarAsync<int>(query,new {authorId});
+        return res;
+    }
+
+
     public async Task<bool> UpdateAuthor(Authors author)
     {
         using var conn=data.Connection();

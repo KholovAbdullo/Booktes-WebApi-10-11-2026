@@ -27,6 +27,16 @@ public class BookRepository(Database database):IBookRepository
         return res > 0;
     }
 
+    public async Task<int> GetAmountByPublishedYear(int year)
+    {
+        using var conn = data.Connection();
+        conn.Open();
+        var query="select count(*) from Books where publishedyear=@year";
+        var res = await conn.ExecuteScalarAsync<int>(query,new{year});
+        return res;
+    }
+
+
     public async Task<Books> GetBook(int id)
     {
        using var Connection=data.Connection();
@@ -35,6 +45,16 @@ public class BookRepository(Database database):IBookRepository
        var book = await Connection.QuerySingleOrDefaultAsync<Books>(query,new{id});
        return book!;
     }
+
+    public async Task<int> GetBookAmount()
+    {
+        using var conn=data.Connection();
+        conn.Open();
+        var query="select count(*) from Books";
+        var res = await conn.ExecuteScalarAsync<int>(query);
+        return res;
+    }
+
 
     public async Task<List<Books>> GetBooks()
     {

@@ -1,3 +1,4 @@
+using Application.DTOs;
 using Application.Interfaces;
 using Application.Responses;
 using Domain.Models;
@@ -12,15 +13,15 @@ public class AuthorController(IAuthorService authorService) : ControllerBase
     private IAuthorService service = authorService;
 
     [HttpPost]
-    public async Task<ApiResponse<bool>> AddAuthor(Authors author)
+    public async Task<ApiResponse<bool>> AddAuthor(CreateAuthorDto authorDto)
     {
-        return await service.AddAuthor(author);
+        return await service.AddAuthor(authorDto);
     }
 
     [HttpPut]
-    public async Task<ApiResponse<bool>> UpdateAuthor(Authors author)
+    public async Task<ApiResponse<bool>> UpdateAuthor(UpdateAuthorDto authorDto)
     {
-        return await service.UpdateAuthor(author);
+        return await service.UpdateAuthor(authorDto);
     }
 
     [HttpDelete]
@@ -30,21 +31,20 @@ public class AuthorController(IAuthorService authorService) : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ApiResponse<Authors>> GetAuthor(int id)
+    public async Task<ApiResponse<AuthorDto>> GetAuthor(int id)
     {
-        var res = await service.GetAuthor(id);
-
-        if (res == null)
-        {
-            return null!;
-        }
-
-        return res;
+        return await service.GetAuthor(id);
     }
 
     [HttpGet]
-    public async Task<ApiResponse<List<Authors>>> GetAuthors()
+    public async Task<ApiResponse<List<AuthorDto>>> GetAuthors()
     {
         return await service.GetAuthors();
+    }
+
+    [HttpGet("statistic/{authorId}")]
+    public async Task<ApiResponse<AuthorStatisticDto>> GetAuthorStatistic(int authorId)
+    {
+        return await service.GetAuthorStatistic(authorId);
     }
 }
