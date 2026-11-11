@@ -1,5 +1,5 @@
 using System.Net;
-using Application.DTOs;
+using Application.DTOs.Genres;
 using Application.Interfaces;
 using Application.Responses;
 using Domain.Interfaces;

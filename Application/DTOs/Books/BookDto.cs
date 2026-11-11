@@ -1,6 +1,6 @@
-namespace Application.DTOs;
+namespace Application.DTOs.Books;
 
-public class UpdateBookDto
+public class BookDto
 {
     public int Id { get; set; }
     public string Title { get; set; }=null!;

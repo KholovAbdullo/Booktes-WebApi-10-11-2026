@@ -1,8 +1,6 @@
 
-using Application.DTOs;
+using Application.DTOs.Authors;
 using Application.Responses;
-using Domain.Models;
-
 namespace Application.Interfaces;
 
 public interface IAuthorService

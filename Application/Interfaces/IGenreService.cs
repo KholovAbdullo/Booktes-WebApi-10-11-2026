@@ -1,8 +1,6 @@
 
-using Application.DTOs;
 using Application.Responses;
-using Domain.Models;
-
+using Application.DTOs.Genres;
 namespace Application.Interfaces;
 
 public interface IGenreService

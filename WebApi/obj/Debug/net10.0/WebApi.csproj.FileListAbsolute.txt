@@ -87,3 +87,13 @@ C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\obj\Debug\net10.0\
 C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\obj\Debug\net10.0\WebApi.genruntimeconfig.cache
 C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\obj\Debug\net10.0\ref\WebApi.dll
 C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\obj\Debug\net10.0\WebApi.sourcelink.json
+C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\bin\Debug\net10.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\bin\Debug\net10.0\Serilog.dll
+C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\bin\Debug\net10.0\Serilog.AspNetCore.dll
+C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\bin\Debug\net10.0\Serilog.Extensions.Hosting.dll
+C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\bin\Debug\net10.0\Serilog.Extensions.Logging.dll
+C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\bin\Debug\net10.0\Serilog.Formatting.Compact.dll
+C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\bin\Debug\net10.0\Serilog.Settings.Configuration.dll
+C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\bin\Debug\net10.0\Serilog.Sinks.Console.dll
+C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\bin\Debug\net10.0\Serilog.Sinks.Debug.dll
+C:\Users\user\Desktop\Net1moh\Ado.Net\haftai4\BookNest\WebApi\bin\Debug\net10.0\Serilog.Sinks.File.dll
