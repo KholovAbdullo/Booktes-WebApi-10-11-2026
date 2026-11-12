@@ -72,12 +72,12 @@ public class AuthorRepository(Database database):IAuthorRepository
     }
 
 
-    public async Task<bool> UpdateAuthor(Authors author)
+    public async Task<bool> UpdateAuthor(int id,Authors author)
     {
         using var conn=data.Connection();
         conn.Open();
         var query="update Author set fullname=@fullname,country=@country,birthyear=@birthyear where id=@id";
-        var res = await conn.ExecuteAsync(query,author);
+        var res = await conn.ExecuteAsync(query,new {id,author.Fullname,author.Country,author.Birthyear});
         return res > 0;
     }
 }

@@ -81,18 +81,17 @@ public class BookService(IBookRepository bookRepository):IBookService
         return new ApiResponse<BookStatisticDto>(HttpStatusCode.OK, "Book Statistic!", res);
     }
 
-    public async Task<ApiResponse<bool>> UpdateBook(UpdateBookDto bookDto)
+    public async Task<ApiResponse<bool>> UpdateBook(int id,UpdateBookDto bookDto)
     {
         var book = new Books()
         {
-            Id=bookDto.Id,
             Title=bookDto.Title,
             Publishedyear=bookDto.Publishedyear,
             Totalcopies=bookDto.Totalcopies,
             authorId=bookDto.authorId,
             genreId=bookDto.genreId
         };
-        var res = await books.UpdateBook(book);
+        var res = await books.UpdateBook(id,book);
         return res == true
         ? new ApiResponse<bool>(HttpStatusCode.OK, "Update!", res)
         : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Error Update!", res);    

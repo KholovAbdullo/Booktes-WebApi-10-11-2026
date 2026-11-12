@@ -64,12 +64,12 @@ public class BookRepository(Database database):IBookRepository
         return query.ToList();
     }
 
-    public async Task<bool> UpdateBook(Books book)
+    public async Task<bool> UpdateBook(int id,Books book)
     {
         using var Connection=data.Connection();
         Connection.Open();
         var query="update Books set title=@title, publishedyear=@publishedyear,totalcopies=@totalcopies,author_id=@authorId,genre_id=@genreId where id=@id";
-        var res = await Connection.ExecuteAsync(query,book);
+        var res = await Connection.ExecuteAsync(query,new {id,book.Title,book.Publishedyear,book.Totalcopies,book.authorId,book.genreId});
         return res > 0;
     }
 }

@@ -76,19 +76,17 @@ public class GenreService(IGenreRepository genreRepository):IGenreService
         return new ApiResponse<GenreStatisticDto>(HttpStatusCode.OK, "Genre Statistic!", res);
     }
 
-    public async Task<ApiResponse<bool>> UpdateGenre(UpdateGenreDto genreDto)
+    public async Task<ApiResponse<bool>> UpdateGenre(int id,UpdateGenreDto genreDto)
     {
         var genre = new Genres()
         {
-            Id=genreDto.Id,
             Name=genreDto.Name
         };
 
-        var res = await genres.UpdateGenre(genre);
+        var res = await genres.UpdateGenre(id,genre);
 
         return res == true
         ? new ApiResponse<bool>(HttpStatusCode.OK, "Update!", res)
         : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Error Update!", res);
     }
-
 }

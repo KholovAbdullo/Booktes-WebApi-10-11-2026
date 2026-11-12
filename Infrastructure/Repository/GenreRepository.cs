@@ -82,12 +82,12 @@ public class GenreRepository(Database database):IGenreRepository
     }
 
 
-    public async Task<bool> UpdateGenre(Genres genre)
+    public async Task<bool> UpdateGenre(int id,Genres genre)
     {
         using var conn=data.Connection();
         conn.Open();
         var query="update Genres set name=@name where id=@id";
-        var res = await conn.ExecuteAsync(query,genre);
+        var res = await conn.ExecuteAsync(query, new {id,genre.Name});
         return res>0;
     }
 }

@@ -77,17 +77,16 @@ public class AuthorService(IAuthorRepository authorRepository):IAuthorService
         return new ApiResponse<AuthorStatisticDto>(HttpStatusCode.OK, "Authro statistic!", res);
     }
 
-    public async Task<ApiResponse<bool>> UpdateAuthor(UpdateAuthorDto authorDto)
+    public async Task<ApiResponse<bool>> UpdateAuthor(int id,UpdateAuthorDto authorDto)
     {
         var author = new Authors()
         {
-            Id=authorDto.Id,
             Fullname=authorDto.Fullname,
             Country=authorDto.Country,
             Birthyear=authorDto.Birthyear
         };
 
-        var res = await authors.UpdateAuthor(author);
+        var res = await authors.UpdateAuthor(id,author);
         return res == true
         ? new ApiResponse<bool>(HttpStatusCode.OK, "Update!", res)
         : new ApiResponse<bool>(HttpStatusCode.InternalServerError, "Error Update!", res);
