@@ -1,10 +1,13 @@
 using System.Data;
+using Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
 namespace Infrastructure.Data;
 
-public class Database
+public class Database(DbContextOptions<Database> options):DbContext(options)
 {
-     private string ConnectionString="Host=localhost;Port=5432;Database=HomeTask;Username=postgres;Password=1234";
-     public IDbConnection Connection()=>new NpgsqlConnection(ConnectionString);
+     public DbSet<Authors> Authors { get; set; }
+     public DbSet<Books> Books { get; set; }
+     public DbSet<Genres> Genres { get; set;}
 }

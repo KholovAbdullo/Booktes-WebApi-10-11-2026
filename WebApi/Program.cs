@@ -3,6 +3,7 @@ using Application.Services;
 using Domain.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Repository;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,9 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
-
-
-builder.Services.AddScoped<Database>();
 
 builder.Services.AddScoped<IBookRepository,BookRepository>();
 builder.Services.AddScoped<IBookService,BookService>();
@@ -23,7 +21,8 @@ builder.Services.AddScoped<IAuthorService,AuthorService>();
 builder.Services.AddScoped<IGenreRepository,GenreRepository>();
 builder.Services.AddScoped<IGenreService,GenreService>();
 
-
+builder.Services.AddDbContext<Database>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

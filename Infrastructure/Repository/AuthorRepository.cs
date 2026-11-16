@@ -1,7 +1,7 @@
-using Dapper;
 using Domain.Interfaces;
 using Domain.Models;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repository;
 
@@ -11,73 +11,65 @@ public class AuthorRepository(Database database):IAuthorRepository
 
     public async Task<bool> AddAuthor(Authors author)
     {
-        using var conn=data.Connection();
-        conn.Open();
-        var query="insert into Author(fullname,country,birthyear) values(@fullname,@country,@birthyear)";
-        var res = await conn.ExecuteAsync(query,new{author.Fullname,author.Country,author.Birthyear});
-        return res > 0;
+        data.Authors.Add(author);
+        var res = await data.SaveChangesAsync();
+        return res>0;
     }
 
     public async Task<bool> DeleteAuthor(int id)
     {
-        using var conn=data.Connection();
-        conn.Open();
-        var query="delete from Author where id=@id";
-        var res = await conn.ExecuteAsync(query,new{id});
-        return res > 0;
+        var author = await data.Authors.FirstOrDefaultAsync(x=>x.Id==id);
+        if (author != null)
+        {
+            data.Authors.Remove(author);
+        }
+        var res = await data.SaveChangesAsync();
+        return res>0;
     }
 
     public async Task<Authors> GetAuthor(int id)
     {
-        using var conn=data.Connection();
-        conn.Open();
-        var query="select * from Author where id=@id";
-        var author= await conn.QuerySingleOrDefaultAsync<Authors>(query,new{id});
-        return author!;
+        var res = await data.Authors.FirstOrDefaultAsync(x=>x.Id==id);
+        if (res == null)
+        {
+            return null!;
+        }
+        return res;
     }
 
     public async Task<List<Authors>> GetAuthors()
     {
-        using var conn=data.Connection();
-        conn.Open();
-        var query= await conn.QueryAsync<Authors>("select * from Author");
-        return query.ToList();
+        return await data.Authors.ToListAsync();
+
     }
 
     public async Task<int> GetAuthorsAmount()
     {
-        using var conn=data.Connection();
-        conn.Open();
-        var query="select count(*) from Author";
-        var res = await conn.ExecuteScalarAsync<int>(query);
-        return res;
+        return await data.Authors.CountAsync();
     }
 
     public async Task<int> GetMaxPublishedYearByAuthor(int authorId)
     {
-        using var conn=data.Connection();
-        conn.Open();
-        var query = "select max(publishedyear) from Books where id=@authorId";
-        var res = await conn.ExecuteScalarAsync<int>(query,new {authorId});
-        return res;
+        return await data.Books.Where(x=>x.authorId==authorId).MaxAsync(x=>x.Publishedyear);
     }
 
     public async Task<int> GetMinPublishedYearByAuthor(int authorId)
     {
-        using var conn=data.Connection();
-        conn.Open();
-        var query = "select min(publishedyear) from Books where id=@authorId";
-        var res = await conn.ExecuteScalarAsync<int>(query,new {authorId});
-        return res;
+        return await data.Books.Where(x=>x.authorId==authorId).MinAsync(x=>x.Publishedyear);
     }
 
-
-    public async Task<bool> UpdateAuthor(int id,Authors author)
+    public async Task<bool> UpdateAuthor(int id, Authors author)
     {
-        using var conn=data.Connection();
-        conn.Open();
-        var query="update Author set fullname=@fullname,country=@country,birthyear=@birthyear where id=@id";
-        var res = await conn.ExecuteAsync(query,new {id,author.Fullname,author.Country,author.Birthyear});
-        return res > 0;
+        var aut = await data.Authors.FirstOrDefaultAsync(x=>x.Id==id);
+        if (aut != null)
+        {
+            aut.Fullname=author.Fullname;
+            aut.Country=author.Country;
+            aut.Birthyear=author.Birthyear;
+        }
+
+        var res = await data.SaveChangesAsync();
+        return res>0;
     }
+
 }
