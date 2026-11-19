@@ -66,8 +66,12 @@ public class GenreService(IGenreRepository genreRepository):IGenreService
 
     public async Task<ApiResponse<GenreStatisticDto>> GetGenreStatistic(int genreId)
     {
+        var re = await genres.GetGenre(genreId);
+        if (re == null)
+        {
+            return new ApiResponse<GenreStatisticDto>(HttpStatusCode.NotFound, "genre not found!",null!);
+        }
         var res = new GenreStatisticDto();
-
         res.GenresAmount=await genres.GetGenresAmount();
         res.MaxPublishedYear=await genres.GetMaxPublishedYearByGenre(genreId);
         res.MinPublishedYear=await genres.GetMinPublishedYearByGenre(genreId);

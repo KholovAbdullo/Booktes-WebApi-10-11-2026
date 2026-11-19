@@ -18,8 +18,8 @@ public class BookService(IBookRepository bookRepository):IBookService
             Title=bookDto.Title,
             Publishedyear=bookDto.Publishedyear,
             Totalcopies=bookDto.Totalcopies,
-            authorId=bookDto.authorId,
-            genreId=bookDto.genreId
+            AuthorId=bookDto.AuthorId,
+            GenreId=bookDto.GenreId
         };
 
         var res = await books.AddBook(book);
@@ -51,8 +51,8 @@ public class BookService(IBookRepository bookRepository):IBookService
             Title=book.Title,
             Publishedyear=book.Publishedyear,
             Totalcopies=book.Totalcopies,
-            authorId=book.authorId,
-            genreId=book.genreId
+            AuthorId=book.AuthorId,
+            GenreId=book.GenreId
         };
         return new ApiResponse<BookDto>(HttpStatusCode.OK, "Book!", res);
     }
@@ -66,8 +66,8 @@ public class BookService(IBookRepository bookRepository):IBookService
             Title=b.Title,
             Publishedyear=b.Publishedyear,
             Totalcopies=b.Totalcopies,
-            authorId=b.authorId,
-            genreId=b.genreId
+            AuthorId=b.AuthorId,
+            GenreId=b.GenreId
         }).ToList();
 
         return new ApiResponse<List<BookDto>>(HttpStatusCode.OK, "List Books!", book);
@@ -88,8 +88,8 @@ public class BookService(IBookRepository bookRepository):IBookService
             Title=bookDto.Title,
             Publishedyear=bookDto.Publishedyear,
             Totalcopies=bookDto.Totalcopies,
-            authorId=bookDto.authorId,
-            genreId=bookDto.genreId
+            AuthorId=bookDto.AuthorId,
+            GenreId=bookDto.GenreId
         };
         var res = await books.UpdateBook(id,book);
         return res == true

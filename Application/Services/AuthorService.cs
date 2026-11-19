@@ -70,6 +70,11 @@ public class AuthorService(IAuthorRepository authorRepository):IAuthorService
 
     public async Task<ApiResponse<AuthorStatisticDto>> GetAuthorStatistic(int authorId)
     {
+        var re = await authors.GetAuthor(authorId);
+        if (re == null)
+        {
+            return new ApiResponse<AuthorStatisticDto>(HttpStatusCode.NotFound, "Author not found!",null!);
+        }
         var res = new AuthorStatisticDto();
         res.AuthorsAmount=await authors.GetAuthorsAmount();
         res.MaxPublishedYear=await authors.GetMaxPublishedYearByAuthor(authorId);

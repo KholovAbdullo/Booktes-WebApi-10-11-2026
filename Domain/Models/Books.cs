@@ -6,6 +6,10 @@ public class Books
     public string Title { get; set; }=null!;
     public int Publishedyear { get; set; }
     public int Totalcopies {get; set; }
-    public int authorId { get; set; }
-    public int genreId { get; set; }
+
+    public int AuthorId { get; set; }
+    public Authors Author { get; set; }=null!;
+
+    public int GenreId { get; set; }
+    public Genres Genre { get; set; }=null!;
 }

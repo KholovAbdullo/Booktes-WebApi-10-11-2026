@@ -35,7 +35,7 @@ public class BookRepository(Database database):IBookRepository
 
     public async Task<Books> GetBook(int id)
     {
-        var res = await data.Books.FirstOrDefaultAsync(x=>x.Id==id);
+        var res = await data.Books.Include(x=>x.Author).Include(x=>x.Genre).FirstOrDefaultAsync(x=>x.Id==id);
         if (res == null)
         {
             return null!;
@@ -50,7 +50,7 @@ public class BookRepository(Database database):IBookRepository
 
     public async Task<List<Books>> GetBooks()
     {
-        return await data.Books.ToListAsync();
+        return await data.Books.Include(x=>x.Author).Include(x=>x.Genre).ToListAsync();
     }
 
     public async Task<bool> UpdateBook(int id, Books book)
@@ -61,8 +61,8 @@ public class BookRepository(Database database):IBookRepository
             bo.Title=book.Title;
             bo.Publishedyear=book.Publishedyear;
             bo.Totalcopies=book.Totalcopies;
-            bo.authorId=book.authorId;
-            bo.genreId=book.genreId;
+            bo.AuthorId=book.AuthorId;
+            bo.GenreId=book.GenreId;
         }
 
         var res = await data.SaveChangesAsync();

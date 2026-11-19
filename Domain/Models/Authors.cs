@@ -6,4 +6,6 @@ public class Authors
     public string Fullname { get; set; }=null!;
     public string Country { get; set; }=null!;
     public int Birthyear {get; set; }
+
+    public List<Books> Books { get; set; }=[];
 }

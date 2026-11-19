@@ -30,12 +30,12 @@ public class GenreRepository(Database database):IGenreRepository
 
     public async Task<int> GetAmountByGenre(int genreId)
     {
-        return await data.Books.CountAsync(x=>x.genreId==genreId);
+        return await data.Books.CountAsync(x=>x.GenreId==genreId);
     }
 
     public async Task<Genres> GetGenre(int id)
     {
-        var res = await data.Genres.FirstOrDefaultAsync(x=>x.Id==id);
+        var res = await data.Genres.Include(x=>x.Books).FirstOrDefaultAsync(x=>x.Id==id);
         if (res == null)
         {
             return null!;
@@ -46,7 +46,7 @@ public class GenreRepository(Database database):IGenreRepository
 
     public async Task<List<Genres>> GetGenres()
     {
-        return await data.Genres.ToListAsync();
+        return await data.Genres.Include(x=>x.Books).ToListAsync();
     }
 
     public async Task<int> GetGenresAmount()
@@ -56,12 +56,12 @@ public class GenreRepository(Database database):IGenreRepository
 
     public async Task<int> GetMaxPublishedYearByGenre(int genreId)
     {
-        return await data.Books.Where(x=>x.genreId==genreId).MaxAsync(x=>x.Publishedyear);
+        return await data.Books.Where(x=>x.GenreId==genreId).MaxAsync(x=>x.Publishedyear);
     }
 
     public async Task<int> GetMinPublishedYearByGenre(int genreId)
     {
-        return await data.Books.Where(x=>x.genreId==genreId).MinAsync(x=>x.Publishedyear);
+        return await data.Books.Where(x=>x.GenreId==genreId).MinAsync(x=>x.Publishedyear);
     }
 
     public async Task<bool> UpdateGenre(int id, Genres genre)

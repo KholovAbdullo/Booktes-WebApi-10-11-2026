@@ -29,7 +29,7 @@ public class AuthorRepository(Database database):IAuthorRepository
 
     public async Task<Authors> GetAuthor(int id)
     {
-        var res = await data.Authors.FirstOrDefaultAsync(x=>x.Id==id);
+        var res = await data.Authors.Include(x=>x.Books).FirstOrDefaultAsync(x=>x.Id==id);
         if (res == null)
         {
             return null!;
@@ -39,8 +39,7 @@ public class AuthorRepository(Database database):IAuthorRepository
 
     public async Task<List<Authors>> GetAuthors()
     {
-        return await data.Authors.ToListAsync();
-
+        return await data.Authors.Include(x=>x.Books).ToListAsync();
     }
 
     public async Task<int> GetAuthorsAmount()
@@ -50,12 +49,12 @@ public class AuthorRepository(Database database):IAuthorRepository
 
     public async Task<int> GetMaxPublishedYearByAuthor(int authorId)
     {
-        return await data.Books.Where(x=>x.authorId==authorId).MaxAsync(x=>x.Publishedyear);
+        return await data.Books.Where(x=>x.AuthorId==authorId).MaxAsync(x=>x.Publishedyear);
     }
 
     public async Task<int> GetMinPublishedYearByAuthor(int authorId)
     {
-        return await data.Books.Where(x=>x.authorId==authorId).MinAsync(x=>x.Publishedyear);
+        return await data.Books.Where(x=>x.AuthorId==authorId).MinAsync(x=>x.Publishedyear);
     }
 
     public async Task<bool> UpdateAuthor(int id, Authors author)
