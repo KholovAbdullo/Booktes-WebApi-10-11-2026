@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20261118173839_InitialCreate")]
+    [Migration("20261120103434_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -37,15 +37,17 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Fullname")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.Books", b =>
@@ -67,7 +69,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("Totalcopies")
                         .HasColumnType("integer");
@@ -78,7 +81,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.Genres", b =>
@@ -91,11 +94,12 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Genres", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Models.Books", b =>
@@ -103,13 +107,13 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Models.Authors", "Author")
                         .WithMany("Books")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.Genres", "Genre")
                         .WithMany("Books")
                         .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Author");

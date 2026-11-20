@@ -17,8 +17,8 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Fullname = table.Column<string>(type: "text", nullable: false),
-                    Country = table.Column<string>(type: "text", nullable: false),
+                    Fullname = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Birthyear = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -32,7 +32,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false)
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,7 +45,7 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<string>(type: "text", nullable: false),
+                    Title = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Publishedyear = table.Column<int>(type: "integer", nullable: false),
                     Totalcopies = table.Column<int>(type: "integer", nullable: false),
                     AuthorId = table.Column<int>(type: "integer", nullable: false),
@@ -59,13 +59,13 @@ namespace Infrastructure.Migrations
                         column: x => x.AuthorId,
                         principalTable: "Authors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Books_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
